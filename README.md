@@ -5,7 +5,7 @@ Next, My work will focus on astrophysical features such as self-gravity and radi
 
 I made pure 3D ideal MHD part as a demo and uploaded it on release page, introducung usage and contents of demo in this README. Besides, this README is also a developer log for my MHD software development.
 By the way, if you are interested in my work about one-dimensional compressible fluid dynamics, please refer this [repository](https://github.com/C-MCheng/CUDA-CompressibleFlow/).  
-##Requirements
+## Requirements
 - OS: Windows-x64 | Linux-x64
 - Programming: Python 3 and NumPy
 ## Software features
