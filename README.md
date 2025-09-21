@@ -20,7 +20,7 @@ By the way, if you are interested in my work about one-dimensional compressible 
 - HLLE solver
 - MUSCL-Hancock scheme
 - unsplit Godunov method
-- constrained Transport method
+- constrained transport method
 ## User guide
 ### 1. Writing initial conditions into a HDF5 file
 The most difficult thing for users is to write a initial state of MHD into a HDF5 file. However, this is just a demo so that I think that users don't want to spend much time to write a code for initial conditions.
@@ -75,7 +75,31 @@ The performance results below are from my hardware:
  ![](examples/performance.png)
 
  Please note that the CPU running time in the above measurement is according to just-in-time compilation (JIT) rather than ahead-of-time compilation (AOT). 
- These two have performance difference and the performance of JIT is better than of AOT in general due to dynamic optimization during runtime. Thus, the CPU performance in this demo is lower than in the release version.
+ JIT and AOT have performance difference and the performance of JIT is better than of AOT in general due to dynamic optimization during runtime. Thus, the CPU performance in this demo is lower than in the release version.
 ## Gallery
+- Brio & Wu Shock Tube
 
+![](examples/BrioWuShockTube.gif)
+
+- MHD Blast Wave
+  
+![](examples/MHDBlastWave.gif)
+
+- MHD Rotor
+  
+![](examples/MHDRotor.gif)
+
+- Orszag-Tang Vortex
+  
+![](examples/OrszagTangVortex.gif)
 ## Developer log
+My goal is to develop a user-friendly MHD software for astrophysical simulations and the second-order accuracy three-dimensional ideal MHD with CPU and GPU parallel computing is completed although I haven't implemented the HLLD solver capturing finer stucture.
+
+Anyway, I will turn my work to astrophysicsal features and the next is self-gravity. This work includes 3D Poisson solver to solve Gauss's law for Newtonian gravity and couple gravity into MHD equations. 
+
+Now, I'm developing Poisson solver adopting multigrid with red-black Gauss-Seidel iteration. 1D multigrid with Dirichlet boundary conditions is finished so let's see an example.
+
+We hava a 1D Poisson equation: $\displaystyle \frac{d\phi}{dx^2}=\sin(x)$ and its solution is $\phi(x)=-\sin(x)+x\sin(1)$ on [0, 1] with homogeneous Dirichlet boundary conditions.
+The numerical answer from 1D multigrid with red-black Gauss-Seidel iteration is shown in below figure.
+
+![](examples/Multigrid1D.png)
