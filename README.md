@@ -9,11 +9,11 @@ By the way, if you are interested in my work about one-dimensional compressible 
 - OS: Windows-x64 | Linux-x64
 - Programming: Python 3 and NumPy
 ## Software features
-- Ahead-of-time compilation (adopting just-in-time compilation in release version in the future)
+- Ahead-of-time compilation (adopting just-in-time compilation in the release version in the future)
 - Console APP
 - HDF5 file I/O
 - CPU Parallel computing
-- GPU Parallel computing (not integrated in the demo)
+- GPU Parallel computing (not being integrated in the demo)
 ## Numerical algorithms
 - Finite volume method
 - Piecewise linear reconstruction with minmod limiter
@@ -24,11 +24,11 @@ By the way, if you are interested in my work about one-dimensional compressible 
 ## User guide
 ### 1. Writing initial conditions into a HDF5 file
 The most difficult thing for users is to write a initial state of MHD into a HDF5 file. However, this is just a demo so that I think that users don't want to spend much time to write a code for initial conditions.
-Thus, I provide a initial conditions of MHD rotor code with which you can output HDF5 file directly, please download MHDRotor.py in examples folder. The MHD rotor is a classical test problem for multidimensional MHD so I uploaded its initial conditions code.
+Thus, I provide a initial conditions of MHD rotor code with which users can output HDF5 file directly, please download MHDRotor.py in examples folder. The MHD rotor is a classical test problem for multidimensional MHD so I uploaded its initial conditions code.
 
 Let's look the code MHDRotor.py and see what users can modify. 
 First, the seventh line `path` is HDF5 files output path. In this software, for not WSL2 OS, files are saved in the folder named data placed in the path includeing exe file and, for WSL2, in the desktop.
-Because of storage limit of WSL2, saving files in desktop is more convenient. For example, if you will run this demo on WSL2, you should type `path="/mnt/c/Users/Your_username/Desktop/data/"`.
+Because of storage limit of WSL2, saving files in desktop is more convenient. For example, if users will run this demo on WSL2, users should type `path="/mnt/c/Users/Your_username/Desktop/data/"`.
 
 Then, there are some arguments in the eleventh line:
 - `CFL`: This is the Courant–Friedrichs–Lewy number which is lower than 1.0. The lower the CFL is, the more stable numerically the simulation is.
@@ -42,20 +42,40 @@ Users can modify `CFL`, `evolutionTime`, `n`, `L` and `gamma` within reasonable 
 
 Finally, please execute the function `InitializeData()` and I had typed in the 166th line.
 ### 2. Running a simulation
-If you don't have exe file yet. Please go to Releases page in this repository and download a zip file corresponding to your OS. The exe file name is MHD3D, please activate it.
-By the way, for Linux-x64 version, you need to execute command line `chomd +x MHD3D` at first time. 
+If users don't have exe file yet. Please go to Releases page in this repository and download a zip file corresponding to users' OS. The exe file name is MHD3D, please activate it.
+By the way, for Linux-x64 version, users need to execute command line `chomd +x MHD3D` at first time. 
 
 Before running a simulation, users need to follow instructions to key sometings in the console.
 
-You see `Congratulations! All initial settings are already set up successfully. Your simulation starts now!` if all settings are set up successfully and then the software simulates your model until reaching end time you key. 
+Users will see `Congratulations! All initial settings are already set up successfully. Your simulation starts now!` in the console if all settings are set up successfully and then the software simulates users' model until reaching end time. 
 ### 3. Reading and analyzing results
-After a simulation, you can read HDF5 files. I also think that users don't want to spend much time to write a code for reading data. Thus, don't worry, I provide a function `DrawData()` in MHDRotor.py.
+After a simulation, users can read HDF5 files. I also think that users don't want to spend much time to write a code for reading data. Thus, don't worry, I provide a function `DrawData()` in MHDRotor.py.
 This function draw density and pressure fields at each step from all HDF5 files in data folder.
 
 Below figure is visualization of 2D slice of MHD rotor test at time = 0.15. Lightblue arrows are magnetic field.
 
 ![](examples/MHDRotor.png)
 ### 4. Restarting a simulaiton
-It's very easy to restart a smulation if you have HDF5 files from last turn. You just reactivate exe file again.
-However, please note that if you close software or cease simulation abnormally in last turn, you should restart from the second to last step rather than the last because the data may not completed in the last step output.
+It's very easy to restart a smulation if users have HDF5 files from last turn. Users just reactivate exe file again and key last step or other step from which users want to restart and then key another value of end time.
+However, please note that if users close software or cease simulation before the simulation finishes in last turn, users should restart from the second to last step rather than the last because the data may not completed in the last step output.
 ## Performance
+Despite the GPU Parallel computing not being integrated in this demo, I still want to show the results of GPU speedup. This software, of course, will include GPU parallel computing in release version in the future.
+
+The performance results below are from my hardware:
+- CPU: AMD Ryzen 9 5900X
+- GPU: NVIDIA RTX 3080 Ti
+- RAM: DDR4-3600 32GB(16GBx2)
+
+ The definition of GPU speedup is:
+
+ $\displaystyle \text{speedup} = \frac{\text{CPU}}{\text{GPU}} = \frac{\text{time of CPU parallel computing + time of CPU files output}}{\text{time of GPU parallel computing + time of data transfer between CPU and GPU + time of CPU files output}}$
+
+ and the measurement method is to run one step and record running time with different number of cells in the MHD rotor test as shown in below figure.
+
+ ![](examples/performance.png)
+
+ Please note that the CPU running time in the above measurement is according to just-in-time compilation (JIT) rather than ahead-of-time compilation (AOT). 
+ These two have performance difference and the performance of JIT is better than of AOT in general due to dynamic optimization during runtime. Thus, the CPU performance in this demo is lower than in the release version.
+## Gallery
+
+## Developer log
