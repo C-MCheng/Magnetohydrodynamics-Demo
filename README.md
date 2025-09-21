@@ -30,7 +30,7 @@ Let's look the code MHDRotor.py and see what users can modify.
 First, the seventh line `path` is HDF5 files output path. In this software, for not WSL2 OS, files are saved in the folder named data placed in the path includeing exe file and, for WSL2, in the desktop.
 Because of storage limit of WSL2, saving files in desktop is more convenient. For example, if users will run this demo on WSL2, users should type `path="/mnt/c/Users/Your_username/Desktop/data/"`.
 
-Then, there are some arguments in the eleventh line:
+Then, there are some parameters in the eleventh line:
 - `CFL`: This is the Courant–Friedrichs–Lewy number which is lower than 1.0. The lower the CFL is, the more stable numerically the simulation is.
 - `evolutionTime`: The evolution time means a time interval the fluid flows from start in the simuation. For initial condition, we set 0.0 usually.
 - `n`: n is the number of cells. The space domain is divided by these cells and each cell has a coordinate and physical variables. The more the the number of cells, the more accurate numerically the simulation is.
