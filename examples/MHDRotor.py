@@ -150,7 +150,7 @@ def DrawData(path = path):
         
         variables = [rho, p]
         variablesName = ["Density", "Pressure"]
-        plt.suptitle("MHD Rotor (nx=ny=nz="+str(n)+") at Time: 0.15", fontsize=14)
+        plt.suptitle("MHD Rotor (nx=ny=nz="+str(n)+")", fontsize=14)
         for j, ax in enumerate(axes):
             ax.clear()
             mesh = ax.imshow(variables[j], extent=[l[0], l[-1], l[0], l[-1]], origin="lower", interpolation='bilinear', cmap='inferno') 
